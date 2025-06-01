@@ -24,14 +24,10 @@ struct LocationsView: View {
                 Spacer()
                 locationsPreviewStack
             }
+            .sheet(item: $vm.sheetLocation, onDismiss: nil) { location in
+                LocationDetailView(location: location)
+            }.cornerRadius(30)
         }
-    }
-}
-
-struct LocationsView_Previews: PreviewProvider {
-    static var previews: some View {
-        LocationsView()
-            .environmentObject(LocationsViewModel())
     }
 }
 
@@ -41,10 +37,10 @@ extension LocationsView {
         VStack {
             Button(action: vm.toggleLocationsList) {
                 
-                Image(systemName: "arrow.down.circle")
+                Image(systemName: "arrow.down.circle.fill")
                     .font(.title3)
                     .foregroundColor(.primary.opacity(0.8))
-                    .padding()
+                    .padding(10)
                     .rotationEffect(Angle(degrees: vm.showLocationsList ? 180 : 0))
 
                 Text(vm.mapLocation.name + ", " + vm.mapLocation.cityName)
@@ -62,7 +58,7 @@ extension LocationsView {
         }
         .background(.ultraThinMaterial)
         .cornerRadius(40)
-        .shadow(color: Color.black.opacity(0.3), radius: 20, x: 0, y: 0)
+        .shadow(color: Color.black.opacity(0.4), radius: 5, x: 0, y: 0)
         .overlay(
             RoundedRectangle(cornerRadius: 40)
                 .stroke(Color.white.opacity(0.1), lineWidth: 1 )
@@ -75,7 +71,7 @@ extension LocationsView {
             annotationContent: {location in
             MapAnnotation(coordinate: location.coordinates) {
                 LocationMapAnnotationView()
-                    .scaleEffect(vm.mapLocation == location ? 1 : 0.7)
+                    .scaleEffect(vm.mapLocation == location ? 1 : 0.6)
                     .shadow(radius: 10)
                     .onTapGesture {
                         vm.showNextLocation(location: location)
@@ -102,4 +98,5 @@ extension LocationsView {
 
 #Preview {
     LocationsView()
+        .environmentObject(LocationsViewModel())
 }

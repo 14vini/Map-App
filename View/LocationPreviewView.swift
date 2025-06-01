@@ -39,6 +39,7 @@ struct LocationPreviewView: View {
         )
         
         .cornerRadius(40)
+        .shadow(color: Color.black.opacity(0.3), radius: 3 , x: 0, y: 0)
     }
 }
 
@@ -50,12 +51,12 @@ extension LocationPreviewView{
                     .resizable()
                     .scaledToFill()
                     .frame(width: 100, height: 100)
-                    .cornerRadius(10)
+                    .cornerRadius(20)
             }
         }
         .padding(2)
         .background(Color.white.blur(radius: 15))
-        .cornerRadius(10)
+        .cornerRadius(20)
     }
     
     private var TitleSection: some View {
@@ -76,7 +77,7 @@ extension LocationPreviewView{
     
     private var learnMoreButton: some View {
         Button{
-            
+            vm.sheetLocation = location
         } label: {
             Text("Learn more")
                 .font(.headline)
@@ -84,6 +85,7 @@ extension LocationPreviewView{
             
         }
         .buttonStyle(.borderedProminent)
+        .tint(.blue)
         .cornerRadius(50)
 
     }
@@ -98,6 +100,7 @@ extension LocationPreviewView{
             
         }
         .buttonStyle(.bordered)
+        .tint(.cyan)
         .cornerRadius(50)
     
     }
