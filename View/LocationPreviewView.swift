@@ -32,6 +32,12 @@ struct LocationPreviewView: View {
                 .fill(.ultraThinMaterial)
                 .offset(y: 65)
         )
+        .overlay(
+            RoundedRectangle(cornerRadius: 40)
+                .stroke(Color.white.opacity(0.1), lineWidth: 1 )
+                .offset(y: 65)
+        )
+        
         .cornerRadius(40)
     }
 }
@@ -47,8 +53,8 @@ extension LocationPreviewView{
                     .cornerRadius(10)
             }
         }
-        .padding(6)
-        .background(Color.white)
+        .padding(2)
+        .background(Color.white.blur(radius: 15))
         .cornerRadius(10)
     }
     
@@ -57,9 +63,12 @@ extension LocationPreviewView{
             Text(location.name)
                 .font(.title2)
                 .fontWeight(.bold)
+                .foregroundColor(.primary.opacity(0.8))
             
             Text(location.cityName)
                 .font(.subheadline)
+                .foregroundColor(.primary.opacity(0.8))
+
         }
         .frame(maxWidth: .infinity,alignment: .leading)
 

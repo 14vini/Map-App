@@ -15,28 +15,14 @@ struct LocationsView: View {
     
     var body: some View {
         ZStack {
-            Map(coordinateRegion: $vm.mapRegion)
+            MapLayer
             .ignoresSafeArea()
             
             VStack(spacing: 0) {
                 header
                     .padding()
-                
                 Spacer()
-                
-                ZStack{
-                    ForEach(vm.locations){ location in
-                        if vm.mapLocation == location { LocationPreviewView(location: location)
-                                .shadow(color: Color.black.opacity(0.3),radius: 20)
-                                .padding()
-                                .padding(.bottom)
-                                .transition(.asymmetric(
-                                    insertion: .move(edge: .trailing),
-                                    removal: .move(edge: .leading)))
-                        }
-                    }
-                }
-                
+                locationsPreviewStack
             }
         }
     }
@@ -56,18 +42,18 @@ extension LocationsView {
             Button(action: vm.toggleLocationsList) {
                 
                 Image(systemName: "arrow.down.circle")
-                    .font(.title2)
-                    .foregroundColor(.primary.opacity(0.9))
+                    .font(.title3)
+                    .foregroundColor(.primary.opacity(0.8))
                     .padding()
                     .rotationEffect(Angle(degrees: vm.showLocationsList ? 180 : 0))
 
                 Text(vm.mapLocation.name + ", " + vm.mapLocation.cityName)
-                    .font(.title3)
-                    .fontWeight(.black)
-                    .foregroundColor(.primary.opacity(0.9))
-                    .frame(height: 40)
+                    .font(.headline)
+                    .fontWeight(.bold)
+                    .foregroundColor(.primary.opacity(0.8))
+                    .frame(height: 30)
                     .animation(.none, value: vm.mapLocation)
-                    .padding(.horizontal)
+                    .padding(.trailing)
             }
             
             if vm.showLocationsList {
@@ -76,11 +62,41 @@ extension LocationsView {
         }
         .background(.ultraThinMaterial)
         .cornerRadius(40)
-        .shadow(color: Color.black.opacity(0.3), radius: 20, x: 0, y: 15)
+        .shadow(color: Color.black.opacity(0.3), radius: 20, x: 0, y: 0)
         .overlay(
             RoundedRectangle(cornerRadius: 40)
-                .stroke(Color.primary.opacity(0.2), lineWidth: 0.5 )
+                .stroke(Color.white.opacity(0.1), lineWidth: 1 )
         )
+    }
+    
+    private var MapLayer: some View {
+        Map(coordinateRegion: $vm.mapRegion,
+            annotationItems: vm.locations,
+            annotationContent: {location in
+            MapAnnotation(coordinate: location.coordinates) {
+                LocationMapAnnotationView()
+                    .scaleEffect(vm.mapLocation == location ? 1 : 0.7)
+                    .shadow(radius: 10)
+                    .onTapGesture {
+                        vm.showNextLocation(location: location)
+                    }
+            }
+        })
+    }
+    
+    private var locationsPreviewStack: some View {
+        ZStack{
+            ForEach(vm.locations){ location in
+                if vm.mapLocation == location { LocationPreviewView(location: location)
+                        .shadow(color: Color.black.opacity(0.3),radius: 20)
+                        .padding()
+                        .padding(.bottom)
+                        .transition(.asymmetric(
+                            insertion: .move(edge: .trailing),
+                            removal: .move(edge: .leading)))
+                }
+            }
+        }
     }
 }
 
