@@ -12,10 +12,98 @@ struct LocationPreviewView: View {
     let location: Location
     
     var body: some View {
-        Text(location.name)
+        HStack(alignment: .bottom, spacing: 0){
+            VStack(alignment: .leading, spacing: 16) {
+                
+                ImageSection
+                TitleSection
+            }
+            
+            VStack(spacing: 8 ){
+               
+                learnMoreButton
+                NextButton
+                
+            }
+        }
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 40)
+                .fill(.ultraThinMaterial)
+                .offset(y:65)
+            
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 40)
+                .stroke(Color.primary.opacity(0.2), lineWidth: 1)
+                .offset(y:65))
+        
+        .cornerRadius(40)
     }
 }
 
+extension LocationPreviewView{
+    private var ImageSection: some View {
+        ZStack{
+            if let imageName = location.imageNames.first {
+                Image(imageName)
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 100, height: 100)
+                    .cornerRadius(10)
+            }
+        }
+        .padding(6)
+        .background(Color.white)
+        .cornerRadius(10)
+    }
+    
+    private var TitleSection: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(location.name)
+                .font(.title2)
+                .fontWeight(.bold)
+            
+            Text(location.cityName)
+                .font(.subheadline)
+        }
+        .frame(maxWidth: .infinity,alignment: .leading)
+
+    }
+    
+    private var learnMoreButton: some View {
+        Button{
+            
+        } label: {
+            Text("Learn more")
+                .font(.headline)
+                .frame(width: 125, height: 36)
+            
+        }
+        .buttonStyle(.borderedProminent)
+        .cornerRadius(50)
+
+    }
+    
+    private var NextButton: some View {
+        Button{
+            
+        } label: {
+            Text("Next")
+                .font(.headline)
+                .frame(width: 125, height: 36)
+            
+        }
+        .buttonStyle(.bordered)
+        .cornerRadius(50)
+    }
+}
+
+
 #Preview {
-    LocationPreviewView(location: LocationsDataService.locations.first!)
+    ZStack {
+        Color.black.ignoresSafeArea()
+        LocationPreviewView(location: LocationsDataService.locations.first!)
+            .padding()
+    }
 }

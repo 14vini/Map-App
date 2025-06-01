@@ -21,7 +21,17 @@ struct LocationsView: View {
             VStack(spacing: 0) {
                 header
                     .padding()
+                
                 Spacer()
+                
+                ZStack{
+                    ForEach(vm.locations){ location in
+                        if vm.mapLocation == location { LocationPreviewView(location: location)
+                                .shadow(color: Color.black.opacity(0.3),radius: 20)
+                                .padding()
+                        }
+                    }
+                }
                 
             }
         }
@@ -60,12 +70,12 @@ extension LocationsView {
                 LocationsListView()
             }
         }
-        .background(.thickMaterial.opacity(0.95))
+        .background(.ultraThinMaterial)
         .cornerRadius(40)
         .shadow(color: Color.black.opacity(0.3), radius: 20, x: 0, y: 15)
         .overlay(
             RoundedRectangle(cornerRadius: 40)
-                .stroke(Color.primary.opacity(0.2), lineWidth: 0.5)
+                .stroke(Color.primary.opacity(0.2), lineWidth: 1)
         )
     }
 }
