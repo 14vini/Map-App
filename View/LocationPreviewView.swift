@@ -66,7 +66,7 @@ extension LocationPreviewView{
                 .fontWeight(.bold)
                 .foregroundColor(.primary.opacity(0.8))
             
-            Text(location.cityName)
+            Text("\(location.cityName), \(location.country)")
                 .font(.subheadline)
                 .foregroundColor(.primary.opacity(0.8))
 
@@ -79,7 +79,7 @@ extension LocationPreviewView{
         Button{
             vm.sheetLocation = location
         } label: {
-            Text("Learn more")
+            Text("Ver mais")
                 .font(.headline)
                 .frame(width: 125, height: 36)
             
@@ -94,7 +94,7 @@ extension LocationPreviewView{
         Button{
             vm.nextButtonPressed()
         } label: {
-            Text("Next")
+            Text("Próximo")
                 .font(.headline)
                 .frame(width: 125, height: 36)
             

@@ -62,7 +62,8 @@ extension LocationDetailView {
                 Text(location.name)
                     .font(.largeTitle)
                     .fontWeight(.bold)
-                Text(location.cityName)
+                
+                Text("\(location.cityName), \(location.country)")
                     .font(.title3)
                     .fontWeight(.semibold)
     
@@ -78,7 +79,7 @@ extension LocationDetailView {
                 .foregroundColor(.secondary)
             
             if let url = URL(string: location.link){
-                Link("Read on Wikipedia", destination: url)
+                Link("mais info", destination: url)
             }
         }
     }
@@ -105,10 +106,12 @@ extension LocationDetailView {
             vm.sheetLocation = nil
             
         } label : {
-            Image(systemName: "x.circle.fill")
-                .font(.title)
-                .foregroundColor(.secondary)
-                .frame(width: 50, height: 50)
+            Image(systemName: "arrow.down")
+                .font(.title2)
+                .foregroundColor(.primary.opacity(0.8))
+                .frame(width: 40, height: 40)
+                .background(.thinMaterial)
+                .cornerRadius(50)
                 .padding(20)
         }
     }
